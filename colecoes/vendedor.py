@@ -1,10 +1,19 @@
 import crudBD
 from crudBD import vendedor, produto
 
+
 def insertVendedor(nome, sobrenome, empresa):
     print("\n------ INSERT VENDEDOR ------")
-    produtos = []
-    mydict = {"nome" : nome, "sobrenome" : sobrenome, "empresa" : empresa, "produtos" : produtos}
+
+    produtosVend = []
+    todosProdutos = list(produto.find().sort('_id'))
+
+    for prod in todosProdutos:
+        print(prod)
+
+
+
+    mydict = {"nome" : nome, "sobrenome" : sobrenome, "empresa" : empresa, "produtos" : produtosVend}
 
     novoVendedor = vendedor.insert_one(mydict)
     print("Vendedor criado com sucesso" + "\nVendor ID: {}".format(novoVendedor.inserted_id))

@@ -21,8 +21,7 @@ global compra
 compra = mybd.Compra
 compra = mybd.Compra
 
-# ------  CRUD  ------
-# ------ CREATE ------
+
 def docCompleto(colecao, id):
     doc = colecao.find( {'_id' : ObjectId(id)} )
     return doc

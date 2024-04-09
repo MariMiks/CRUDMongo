@@ -1,4 +1,4 @@
-import vendedor, produto, usuario, compra
+import colecoes.vendedor as vendedor, colecoes.produto as produto, colecoes.usuario as usuario, colecoes.compra as compra
 
 print('Bem vindo ao Mercado Livre! :)')
 
@@ -40,6 +40,8 @@ while (deslogar == False) :
                         vendedor.todosVendedor()
                     
                     case 3:
+                        vendedor.todosVendedor()
+                        
                         print('\n------ Vendedor específico ------')
                         idVend = input('Digite o ID do vendedor: ')
 
