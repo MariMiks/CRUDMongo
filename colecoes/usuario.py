@@ -1,17 +1,17 @@
 import crudBD
 from crudBD import usuario, produto, vendedor
 
-def insertUsuario(nome, sobrenome, endereco, favoritos):
-    global usuario
+def insertUsuario(nome, sobrenome, endereco, idProduto):
     print("\n------ INSERT USUARIO ------")
+    
+    docProdFav = list(crudBD.docCompleto(produto, idProduto))
+    
     mydict = {
         "nome" : nome,
         "sobrenome" : sobrenome,
         "endereco" : endereco,
         "favoritos" : favoritos
     }
-
-    
 
     novoUsuario = usuario.insert_one(mydict)
     print("\nUsuário cadastrado com sucesso" + "\nUsuario ID: {}".format(novoUsuario.inserted_id))

@@ -10,7 +10,6 @@ while (deslogar == False) :
           '2. Produto\n' + 
           '3. Usuário\n' + 
           '4. Compra\n' +
-          '5. Favoritos\n' +
           '6. Sair')
     categoria = int(input('Escolha uma categoria: '))
     
@@ -151,9 +150,11 @@ while (deslogar == False) :
                 print('\n------ USUÁRIO ------')
                 print('1. Criar novo\n' + 
                     '2. Listar todos\n' + '3. Usuário específico (ID)\n' + 
-                    '4. Atualizar informações do usuário\n' + '5. Atualizar favoritos' +
+                    '4. Atualizar informações do usuário\n' + 
+                    '5. Adicionar favoritos\n' +
+                    '6. Excluir favoritos\n' +
                     '6. Deletar')
-                opUser = int(input('O que deseja fazer hoje? '))
+                opUser = int(input('O que deseja fazer hoje?  '))
 
                 match opUser:
                     case 1:
@@ -181,29 +182,20 @@ while (deslogar == False) :
                                 'estado' : estado
                             }
                             userEndereco.append(endereco)
-                            opEnd = input('Deseja cadastrar mais um endereço? (S/N) ')
+                            opEnd = input('Deseja cadastrar mais um endereço? (S/N)  ')
                         
                         userFavoritos = []
-                        opFav = input('Possui produtos favoritos? (S/N) ')
+                        opFav = input('Cadastrar produtos favoritos? (S/N)  ')
                         
                         while (opFav != 'N'):
                             print('\nNovo produto favorito\n')
-                            nome = input('Nome: ')
-                            valor = input('Valor: ')
-                            vendNome = input('Nome vendedor: ')
-                            vendEmpresa = input('Empresa do vendedor: ')
-                            vendedorU = {
-                                'nome' : vendNome,
-                                'empresa' : vendEmpresa
-                            }
-                            favorito = {
-                                'nome' : nome,
-                                'valor' : valor,
-                                'vendedor' : vendedorU
-                            }
+                            produto.todosProduto()
+                            
+                            input('\nPasse o ID do produto que deseja:  ')
+                            
 
                             userFavoritos.append(favorito)
-                            opFav = input('Possui mais produtos favoritos? (S/N) ')
+                            opFav = input('Quer cadastrar mais produtos favoritos? (S/N)  ')
                         
                         usuario.insertUsuario(userNome, userSobrenome, userEndereco, userFavoritos)
                     
