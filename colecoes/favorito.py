@@ -7,3 +7,13 @@ def insertFavorito(idProduto):
     favoritos.append(docProduto)
     
     return favoritos
+
+def adicionarFavoritos(idUsuario, idProduto):
+    docUsuario = crudBD.docCompleto(usuario, idUsuario)
+    docProduto = crudBD.docCompleto(produto, idProduto)
+
+    if idProduto in docUsuario['favoritos']:
+        return print('Produto já favoritado!')
+
+    else:
+        docUsuario['favoritos']
