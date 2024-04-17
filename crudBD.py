@@ -23,8 +23,27 @@ compra = mybd.Compra
 
 
 def docCompleto(colecao, id):
-    doc = colecao.find( {'_id' : ObjectId(id)} )
+    doc = colecao.find_one( {'_id' : ObjectId(id)} )
     return doc
+
+# ------ INSERT ------
+def novoEndereco():
+    rua = input('Rua: ')
+    numero = input('Número: ')
+    complemento = input('Complemento: ')
+    bairro = input('Bairro: ')
+    cidade = input('Cidade: ')
+    estado = input('Estado: ')
+    endereco = {
+        'rua': rua,
+        'numero': numero,
+        'complemento' : complemento,
+        'bairro' : bairro,
+        'cidade' : cidade,
+        'estado' : estado
+    }
+
+    return endereco
 
 # ------  READ  ------
 def readTodos(colecao, titulo):
@@ -41,7 +60,7 @@ def readTodos(colecao, titulo):
         num += 1
 
 def readID(colecao, id):
-    mydoc = colecao.find( {'_id' : ObjectId(id)} )
+    mydoc = colecao.find_one( {'_id' : ObjectId(id)} )
     for x in mydoc:
         pprint(x)
     

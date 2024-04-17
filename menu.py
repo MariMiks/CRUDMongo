@@ -2,7 +2,9 @@ import colecoes.vendedor as vendedor
 import colecoes.produto as produto
 import colecoes.usuario as usuario
 import colecoes.compra as compra
-import colecoes.favorito as favorito
+import favorito as favorito
+import crudBD 
+from crudBD import novoEndereco
 
 print('Bem vindo ao Mercado Livre! :)')
 
@@ -172,44 +174,23 @@ while (deslogar == False) :
                         opEnd = 'S'
 
                         while (opEnd != 'N'):
-                            print('\nNovo endereço\n')
+                            print('\nNovo endereço:')
 
-                            rua = input('Rua: ')
-                            numero = input('Número: ')
-                            complemento = input('Complemento: ')
-                            bairro = input('Bairro: ')
-                            cidade = input('Cidade: ')
-                            estado = input('Estado: ')
-                            endereco = {
-                                'rua': rua,
-                                'numero': numero,
-                                'complemento' : complemento,
-                                'bairro' : bairro,
-                                'cidade' : cidade,
-                                'estado' : estado
-                            }
+                            endereco = novoEndereco()
+
                             userEndereco.append(endereco)
                             opEnd = input('Deseja cadastrar mais um endereço? (S/N)  ').upper()
                         
-                        
-                        opFav = input('Cadastrar produtos favoritos? (S/N)  ').upper()
-                        
-                        while (opFav != 'N'):
-                            print('\nNovo produto favorito\n')
-                            produto.todosProduto()
-                            
-                            idProdFav = input('\nPasse o ID do produto que deseja:  ')
-                            
-                            opFav = input('Quer cadastrar mais produtos favoritos? (S/N)  ').upper()
-                        
-                        usuario.insertUsuario(userNome, userSobrenome, userEndereco, favorito.insertFavorito(idProdFav))
+                        usuario.insertUsuario(userNome, userSobrenome, userEndereco)
                     
                     case 2:
                         usuario.todosUsuario()
                     
                     case 3:
                         print('\n------ Usuário específico ------')
-                        idUs = input('Digite o ID do usuário: ')
+                        usuario.todosUsuario()
+
+                        idUs = input('\nDigite o ID do usuário: ')
 
                         print("\n------ USUÁRIO ESCOLHIDO ------")
                         usuario.idUsuario(idUs)
@@ -224,12 +205,14 @@ while (deslogar == False) :
                         opAtu = 'S'
 
                         while (opAtu != 'N'):
-                            print('\n------ Categorias ------')
-                            print('\n1. Dados usuário' + 
+                            print('\n------ O que deseja atualizar ------')
+                            print('\n1. Dados gerais do usuário' + 
                                   '\n2. Adicionar favoritos' + 
-                                  '\n3. Excluir favoritos')
-                            opUsrCat = input('\nEscolha a opção: ')
+                                  '\n3. Excluir favoritos' +
+                                  '\n4. Voltar')
+                            opUsrCat = int(input('\nEscolha a opção: '))
                             
+
                             match opUsrCat:
                                 case 1:
                                     dataUsr = 'S'
@@ -256,27 +239,35 @@ while (deslogar == False) :
                                             novoUsr = endereco
 
                                         print('\nCampo {} atualizado'.format(campoUsr))
+                                        usuario.atualizaUsuario(idUsr, campoUsr, novoUsr)
                                         dataUsr = input('Deseja atualizar mais algum campo? (S/N)').upper()
                                 case 2:
-                                    newFavoritos = []
+                                    opFav = 'S'
                                     while (opFav != 'N'):
-                                        print('\nNovo produto favorito\n')
+                                        print('\n------ Novo produto favorito ------\n')
                                         produto.todosProduto()
                             
-                                        idNewFav = input('\nPasse o ID do produto que deseja:  ')
-                                        newFavorito = favorito.insertFavorito(idNewFav)
-                            
-                                    opFav = input('Quer cadastrar mais produtos favoritos? (S/N)  ').upper()
+                                        idNewFav = input('\nPasse o ID do produto que deseja: ')
+                                        
+                                        favorito.adicionarFavoritos(idUsr, idNewFav)
+                                        print('\nProduto adicionado aos seus favoritos!')
+                                        opFav = input('Quer cadastrar mais produtos favoritos? (S/N)  ').upper()
+                                case 3:
+                                    usuario.todosUsuario()
 
-                            usuario.atualizaUsuario(idUsr, campoUsr, novoUsr)
+
                             opAtu = input('Deseja atualizar algo mais? (S/N) ').upper()
 
-                    case 6:
+                    case 5:
                         print('\n------ Deletar usuário ------')
                         idUsr = input('Digite o ID do usuário: ')
 
                         print("\n------ USUÁRIO DELETADO ------")
                         usuario.deletarUsuario(idUsr)
+                    
+                    case 6:
+                        break
+
                     case _:
                         print('\nNão entendi :(')
         
@@ -285,9 +276,10 @@ while (deslogar == False) :
             while (voltar == False) :
                 print('\n------ COMPRAR ------')
                 print('1. Nova compra\n' + 
-                    '2. Listar todas\n' + '3. Compra específica (ID)\n' + 
-                    '4. Atualizar\n' +
-                    '5. Deletar\n')
+                    '2. Listar todas\n' + 
+                    '3. Compra específica (ID)\n' + 
+                    '4. Deletar\n' +
+                    '5. Voltar\n')
                 opComp = int(input('O que deseja fazer hoje? '))
 
                 match opComp:
@@ -368,28 +360,15 @@ while (deslogar == False) :
                         compra.idCompra(idComp)
                     
                     case 4:
-                        print('\n------ Atualizar compra ------')
-                        idComp = input('Digite o ID da compra: ')
-
-                        print("\n------ COMPRA ESCOLHIDA ------")
-                        compra.idCompra(idComp)
-
-                        opAtu = 'S'
-
-                        while (opAtu != 'N'):
-                            campoComp = input('\nO que deseja atualizar? ')
-                            novoComp = input('Digite o novo valor: ')
-
-                            print('\nCampo {} atualizado'.format(campoComp))
-                            compra.atualizaCompra(idComp, campoComp, novoComp)
-                            opAtu = input('Deseja atualizar mais algum campo? (S/N) ')
-                    
-                    case 5:
                         print('\n------ Deletar compra ------')
                         idComp = input('Digite o ID da compra: ')
 
                         print("\n------ COMPRA DELETADA ------")
                         compra.deletarCompra(idComp)
+                    
+                    case 5:
+                        break
+
                     case _:
                         print('\nNão entendi :(')
         

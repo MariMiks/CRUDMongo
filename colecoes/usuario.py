@@ -1,14 +1,14 @@
 import crudBD
-from crudBD import usuario, produto, vendedor
+from crudBD import usuario
 
-def insertUsuario(nome, sobrenome, endereco, favoritos):
+def insertUsuario(nome, sobrenome, endereco):
     print("\n------ INSERT USUARIO ------")
     
     mydict = {
         "nome" : nome,
         "sobrenome" : sobrenome,
         "endereco" : endereco,
-        "favoritos" : [favoritos]
+        "favoritos" : []
     }
 
     novoUsuario = usuario.insert_one(mydict)
