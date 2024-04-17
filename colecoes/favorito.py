@@ -28,8 +28,10 @@ def excluirFavorito(idUsuario):
     delFav = int(input('\nEscolha qual deseja deletar: '))
     prodFav = listaFavs[delFav-1]
     listaFavs.remove(prodFav)
-
+    
+    colUsuario.atualizaUsuario(idUsuario, 'favoritos', listaFavs)
     print('\nProduto desfavoritado!')
+    
 
     
 

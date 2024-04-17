@@ -2,7 +2,7 @@ import colecoes.vendedor as vendedor
 import colecoes.produto as produto
 import colecoes.usuario as usuario
 import colecoes.compra as compra
-import favorito as favorito
+import colecoes.favorito as favorito
 import crudBD 
 from crudBD import novoEndereco
 
@@ -253,7 +253,7 @@ while (deslogar == False) :
                                         print('\nProduto adicionado aos seus favoritos!')
                                         opFav = input('Quer cadastrar mais produtos favoritos? (S/N)  ').upper()
                                 case 3:
-                                    usuario.todosUsuario()
+                                    favorito.excluirFavorito(idUsr)
 
 
                             opAtu = input('Deseja atualizar algo mais? (S/N) ').upper()

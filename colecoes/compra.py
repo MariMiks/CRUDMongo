@@ -24,8 +24,5 @@ def todosCompra():
 def idCompra(id):
     crudBD.readID(compra, id)
 
-def atualizaCompra(id, campo, novoValor):
-    crudBD.atualizaPadrao(compra, id, campo, novoValor)
-
 def deletarCompra(id):
     crudBD.deletePadrao(compra, id)
