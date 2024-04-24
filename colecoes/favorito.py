@@ -31,8 +31,3 @@ def excluirFavorito(idUsuario):
     
     colUsuario.atualizaUsuario(idUsuario, 'favoritos', listaFavs)
     print('\nProduto desfavoritado!')
-    
-
-    
-
-excluirFavorito('65f1905afe3e572dddd2762d')

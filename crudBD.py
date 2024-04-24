@@ -71,4 +71,3 @@ def atualizaPadrao(colecao, id, campo, novoValor):
 # ------ DELETE ------
 def deletePadrao(colecao, id):
     colecao.delete_one({ '_id' : ObjectId(id) })
-

@@ -1,32 +1,34 @@
+import crudBD 
+from crudBD import novoEndereco, usuario as colUsuario, produto as colProduto
 import colecoes.vendedor as vendedor
 import colecoes.produto as produto
 import colecoes.usuario as usuario
 import colecoes.compra as compra
 import colecoes.favorito as favorito
-import crudBD 
-from crudBD import novoEndereco
+
 
 print('Bem vindo ao Mercado Livre! :)')
 
 deslogar = False
 
-while (deslogar == False) :
+while (deslogar != True) :
     print('\nCategorias: \n' + 
           '1. Vendedor\n' + 
           '2. Produto\n' + 
           '3. Usuário\n' + 
           '4. Compra\n' +
-          '6. Sair')
+          '5. Sair')
     categoria = int(input('Escolha uma categoria: '))
     
     match categoria :
-        case 1:
+        case 1: #vendedor
             voltar = False
 
             while (voltar == False) :
                 print('\n------ VENDEDOR ------')
                 print('1. Criar novo\n' + 
-                    '2. Listar todos\n' + '3. Vendedor específico (ID)\n' + 
+                    '2. Listar todos\n' + 
+                    '3. Vendedor específico (ID)\n' + 
                     '4. Atualizar\n' +
                     '5. Deletar\n' +
                     '6. Voltar')
@@ -86,7 +88,7 @@ while (deslogar == False) :
                     case _:
                         print('Não entendi :(')
         
-        case 2:
+        case 2: #produto
             voltar = False
             while (voltar == False):
                 print('------ PRODUTO ------')
@@ -152,7 +154,7 @@ while (deslogar == False) :
                     case _:
                         print('\nNão entendi :(')
 
-        case 3:
+        case 3: #usuario
             voltar = False
             while (voltar == False) :
                 print('\n------ USUÁRIO ------')
@@ -170,16 +172,8 @@ while (deslogar == False) :
                         userNome = input('Nome: ')
                         userSobrenome = input('Sobrenome: ')
 
-                        userEndereco = []
-                        opEnd = 'S'
-
-                        while (opEnd != 'N'):
-                            print('\nNovo endereço:')
-
-                            endereco = novoEndereco()
-
-                            userEndereco.append(endereco)
-                            opEnd = input('Deseja cadastrar mais um endereço? (S/N)  ').upper()
+                        print('\nNovo endereço:')
+                        userEndereco = novoEndereco()
                         
                         usuario.insertUsuario(userNome, userSobrenome, userEndereco)
                     
@@ -221,22 +215,7 @@ while (deslogar == False) :
                                         if campoUsr != 'endereco':
                                             novoUsr = input('Digite o novo valor: ')
                                         else:
-                                            rua = input('Rua: ')
-                                            numero = input('Número: ')
-                                            complemento = input('Complemento: ')
-                                            bairro = input('Bairro: ')
-                                            cidade = input('Cidade: ')
-                                            estado = input('Estado: ')
-                                            endereco = {
-                                                'rua': rua,
-                                                'numero': numero,
-                                                'complemento' : complemento,
-                                                'bairro' : bairro,
-                                                'cidade' : cidade,
-                                                'estado' : estado
-                                            }
-
-                                            novoUsr = endereco
+                                            novoUsr = crudBD.novoEndereco()
 
                                         print('\nCampo {} atualizado'.format(campoUsr))
                                         usuario.atualizaUsuario(idUsr, campoUsr, novoUsr)
@@ -253,6 +232,7 @@ while (deslogar == False) :
                                         print('\nProduto adicionado aos seus favoritos!')
                                         opFav = input('Quer cadastrar mais produtos favoritos? (S/N)  ').upper()
                                 case 3:
+                                    print('\n------ Excluir favorito ------\n')
                                     favorito.excluirFavorito(idUsr)
 
 
@@ -271,83 +251,58 @@ while (deslogar == False) :
                     case _:
                         print('\nNão entendi :(')
         
-        case 4:
+        case 4: #compra
             voltar = False
             while (voltar == False) :
                 print('\n------ COMPRAR ------')
                 print('1. Nova compra\n' + 
                     '2. Listar todas\n' + 
                     '3. Compra específica (ID)\n' + 
-                    '4. Deletar\n' +
-                    '5. Voltar\n')
+                    '4. Voltar\n')
                 opComp = int(input('O que deseja fazer hoje? '))
 
                 match opComp:
                     case 1:
                         print('\n------ Nova Compra ------\n')
                         print('--> Quem está realizando a compra?\n')
-                        idUser = input('Id usuáiro: ')
-                        nomeUser = input('Nome usuario: ')
-                        sobrenomeUser = input('Sobrenome usuario: ')
-                        crompUsuario = {
-                            'id' : idUser,
-                            'nome' : nomeUser,
-                            'sobrenome' : sobrenomeUser
-                        }
-
-                        print('--> De quem você está comprando?\n')
-                        idVend = input('Id vendedor: ')
-                        nomeVend = input('Nome vendedor: ')
-                        sobrenomeVend = input('Sobrenome vendedor: ')
-                        empresaVend = input('Empresa vendedor: ')
-                        crompVendedor = {
-                            'id' : idVend,
-                            'nome' : nomeVend,
-                            'sobrenome' : sobrenomeVend,
-                            'empresa' : empresaVend
-                        }
-
-
-                        print('--> O que você está comprando?\n')
+                        usuario.todosUsuario()
+                        idUser = input('Id usuário: ')
+                        user = crudBD.docCompleto(colUsuario, idUser)
+                        
+                        print('--> O que deseja comprar?\n')
+                        produto.todosProduto()
                         crompProdutos = []
                         crompTotal = 0
                         opProd = 'S'
                         while (opProd != 'N'):
                             idProd = input('Id produto: ')
-                            nomeProd = input('Nome produto: ')
-                            valorProd = int(input('Valor Produto: '))
-                            produto = {
-                                'nome' : nomeProd,
-                                'produto' : valorProd
-                            }
-
-                            crompProdutos.append(produto)
+                            prod = crudBD.docCompleto(colProduto, idProd)
+                            
+                            crompProdutos.append(prod)
+                            valorProd = float(prod["valor"])
                             crompTotal += valorProd
-                            opProd = print('Deseja adicionar mais produtos? (S/N) ')
+                            
+                            opProd = input('Deseja adicionar mais produtos? (S/N) ').upper()
 
 
-                        print('--> Quando está comprando? Para quando é?\n')
-                        crompDataInicio = input('Data inicial: ')
-                        crompDataFinal = input('Data final: ')
+                        print('--> Quando está comprando?\n')
+                        crompDataInicio = input('Data de hoje: ')
                         
                         
-                        print('\nEndereço de entrega\n')
-                        rua = input('Rua: ')
-                        numero = input('Numero: ')
-                        complemento = input('Complemento: ')
-                        bairro = input('Bairro: ')
-                        cidade = input('Cidade: ')
-                        estado = input('Estado: ')    
-                        crompEndereco = {
-                            'rua' : rua,
-                            'numero' : numero,
-                            'complemento' : complemento,
-                            'bairro' : bairro,
-                            'cidade' : cidade,
-                            'estado' : estado
-                        }
+                        print('--> Escolha seu endereço de entrega:\n')
+                        print(user['endereco'])
 
-                        compra.insertCompra(crompUsuario, crompVendedor, crompProdutos, crompTotal, crompDataInicio, crompDataFinal, crompEndereco)
+                        opEndereco = input('\nDeseja utilizar este endereco? (S/N) ').upper()
+
+                        if opEndereco == 'N':
+                            print('\n---- Novo endereco ----')
+                            crompOutroEndereco = crudBD.novoEndereco()
+
+                            compra.insertCompra(idUser, prod["vendedor"], crompProdutos, crompTotal, crompDataInicio, crompOutroEndereco)
+                        
+                        else:
+                            compra.insertCompra(idUser, prod["vendedor"], crompProdutos, crompTotal, crompDataInicio, user["endereco"])
+
 
                     case 2:
                         compra.todosCompra()
@@ -360,19 +315,12 @@ while (deslogar == False) :
                         compra.idCompra(idComp)
                     
                     case 4:
-                        print('\n------ Deletar compra ------')
-                        idComp = input('Digite o ID da compra: ')
-
-                        print("\n------ COMPRA DELETADA ------")
-                        compra.deletarCompra(idComp)
-                    
-                    case 5:
                         break
 
                     case _:
                         print('\nNão entendi :(')
         
-        case 6:
+        case 5:
             break
         
         case _:
