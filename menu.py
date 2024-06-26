@@ -182,8 +182,6 @@ while (deslogar != True) :
                     
                     case 3:
                         print('\n------ Usuário específico ------')
-                        usuario.todosUsuario()
-
                         idUs = input('\nDigite o ID do usuário: ')
 
                         print("\n------ USUÁRIO ESCOLHIDO ------")
@@ -191,6 +189,8 @@ while (deslogar != True) :
 
                     case 4:
                         print('\n------ Atualizar usuário ------')
+                        usuario.todosUsuario()
+
                         idUsr = input('Digite o ID do usuário: ')
 
                         print("\n------ USUÁRIO ESCOLHIDO ------")

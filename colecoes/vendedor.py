@@ -8,12 +8,7 @@ def insertVendedor(nome, sobrenome, empresa):
     produtosVend = []
     todosProdutos = list(produto.find().sort('_id'))
 
-    for prod in todosProdutos:
-        print(prod)
-
-
-
-    mydict = {"nome" : nome, "sobrenome" : sobrenome, "empresa" : empresa, "produtos" : produtosVend}
+    mydict = {"nome" : nome, "sobrenome" : sobrenome, "empresa" : empresa}
 
     novoVendedor = vendedor.insert_one(mydict)
     print("Vendedor criado com sucesso" + "\nVendor ID: {}".format(novoVendedor.inserted_id))

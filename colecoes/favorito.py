@@ -11,19 +11,19 @@ def insertFavorito(idProduto):
     return favoritos
 
 def adicionarFavoritos(idUsuario, idProduto):
-    docProduto = list(crudBD.docCompleto(produto, idProduto))
+    docProduto = crudBD.docCompleto(produto, idProduto)
 
     colUsuario.atualizaUsuario(idUsuario, "favoritos", docProduto)
 
 def excluirFavorito(idUsuario):
     docUsuario = crudBD.docCompleto(usuario, idUsuario)
-    listaFavs = docUsuario['favoritos']
+    listaFavs = [docUsuario['favoritos']]
 
     print('\nSeus favoritos:\n')
 
     for i in range(len(listaFavs)):
         print('{}. favorito: \n'.format(i+1))
-        pprint('{}'.format(listaFavs[i]))
+        pprint(listaFavs[i])
     
     delFav = int(input('\nEscolha qual deseja deletar: '))
     prodFav = listaFavs[delFav-1]

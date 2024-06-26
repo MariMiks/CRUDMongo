@@ -61,9 +61,8 @@ def readTodos(colecao, titulo):
 
 def readID(colecao, id):
     mydoc = colecao.find_one( {'_id' : ObjectId(id)} )
-    for x in mydoc:
-        pprint(x)
-    
+    pprint(mydoc)
+
 # ------ UPDATE ------
 def atualizaPadrao(colecao, id, campo, novoValor):
     colecao.update_one({'_id' : ObjectId(id)}, {'$set': {campo : novoValor}})
