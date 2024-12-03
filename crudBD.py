@@ -2,7 +2,7 @@ import pymongo
 from pprint import pprint
 from bson import ObjectId
 
-client = pymongo.MongoClient("mongodb+srv://marianasilva155:marianasilva155@fatecnosql.vyamlgr.mongodb.net/?retryWrites=true&w=majority&appName=FatecNoSQL")
+client = pymongo.MongoClient("mongodb+srv://izumifatec:n68oXixu0jEow8iy@cluster0.wawlm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 global mybd
 mybd = client.MercadoLivre
@@ -18,7 +18,6 @@ global usuario
 usuario = mybd.Usuário
 
 global compra
-compra = mybd.Compra
 compra = mybd.Compra
 
 
